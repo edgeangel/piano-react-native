@@ -15,6 +15,8 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
+  Alert
 } from 'react-native';
 
 import {
@@ -24,6 +26,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import {pianoAnalytics} from 'piano-analytics-js';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,6 +66,14 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  pianoAnalytics.setConfigurations({
+    site: 640265,
+    collectDomain: "https://vfjnmjf.pa-cd.com",
+  });
+  pianoAnalytics.sendEvent("page.display", {
+    page: "home_screen",
+  });
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -76,20 +88,20 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
+          <Section title="Send events">
+          <Button
+            title="test_event1 (param1: value1)"
+            color="#0f4c81"
+            onPress={() => 
+              pianoAnalytics.sendEvent("test_event1", {
+                param1: "value1",
+              })
+            }
+          />
           </Section>
           <Section title="Debug">
             <DebugInstructions />
           </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
         </View>
       </ScrollView>
     </SafeAreaView>
