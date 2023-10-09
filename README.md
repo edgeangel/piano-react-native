@@ -1,4 +1,16 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+# piano-react-native
+🎹 React Native example app with Piano Analytics tracking
+
+## Documentation and resources
+* Piano Analytics - JS browserless SDK: https://developers.atinternet-solutions.com/piano-analytics/data-collection/sdks/javascript-browserless
+
+## More information and contribution
+💌 42@edgeangel.co
+
+## License
+The contents of this repository is licensed under the GPL-3.0 license. See [LICENSE](LICENSE) for more information.
 
 # Getting Started
 
