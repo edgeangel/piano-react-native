@@ -23,11 +23,10 @@ import {
   Colors,
   DebugInstructions,
   Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import {pianoAnalytics} from 'piano-analytics-js';
+import {firebase} from '@react-native-firebase/installations';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -66,12 +65,22 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  // Piano Analytics Configuration
   pianoAnalytics.setConfigurations({
     site: 640265,
     collectDomain: "https://vfjnmjf.pa-cd.com",
   });
-  pianoAnalytics.sendEvent("page.display", {
-    page: "home_screen",
+
+  // Piano Analytics Visitor ID
+  const installationsForDefaultApp = firebase.installations();
+  installationsForDefaultApp.getId().then((installationId) => {
+    const visitorId = installationId;
+    pianoAnalytics.setVisitorId(visitorId)
+
+    // Piano Analytics Page Display Event
+    pianoAnalytics.sendEvent("page.display", {
+      page: "home_screen"
+    });
   });
 
   return (
@@ -90,17 +99,25 @@ function App(): JSX.Element {
           }}>
           <Section title="Send events">
           <Button
-            title="test_event1 (param1: value1)"
+            title="test_event (test_property: value1)"
             color="#0f4c81"
-            onPress={() => 
-              pianoAnalytics.sendEvent("test_event1", {
-                param1: "value1",
-              })
-            }
+            onPress={() => { 
+              // Piano Analytics Custom Event with Custom Properties
+              let visitorId: string;
+              firebase.installations().getId().then((installationId) => {
+                visitorId = installationId;
+                pianoAnalytics.setVisitorId(visitorId)
+                pianoAnalytics.sendEvent("test_event", {
+                  test_property: "value1"
+                });
+              });
+            }}
           />
           </Section>
           <Section title="Debug">
             <DebugInstructions />
+          </Section>
+          <Section title="Firebase debug">
           </Section>
         </View>
       </ScrollView>
