@@ -77,6 +77,10 @@ function App(): JSX.Element {
     const visitorId = installationId;
     pianoAnalytics.setVisitorId(visitorId)
 
+    pianoAnalytics.setProperty('user_status', 'premium', {
+      'persistent': true
+    });
+
     // Piano Analytics Page Display Event
     pianoAnalytics.sendEvent("page.display", {
       page: "home_screen"
